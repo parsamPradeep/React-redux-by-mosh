@@ -1,6 +1,6 @@
 import * as action from "./actionTypes";
 
-export let bugAdded = (description) => {
+export const bugAdded = (description) => {
   return {
     type: action.BUG_ADDED,
     payload: {
@@ -9,9 +9,18 @@ export let bugAdded = (description) => {
   };
 };
 
-export let bugRemoved = (Id) => {
+export const bugRemoved = (Id) => {
   return {
     type: action.BUG_REMOVED,
+    payload: {
+      Id: Id,
+    },
+  };
+};
+
+export const bugResolved = (Id) => {
+  return {
+    type: action.BUG_RESOLVED,
     payload: {
       Id: Id,
     },
