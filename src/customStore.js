@@ -1,6 +1,6 @@
 import reducer from "./reducer";
 
-export function createStore(reducer) {
+function createStore(reducer) {
   let state;
   let listners = [];
 
@@ -9,7 +9,7 @@ export function createStore(reducer) {
   }
 
   function dispatch(action) {
-    state = reducer(reducer, action);
+    state = reducer(state, action);
     for (let i = 0; i < listners.length; i++) {
       listners[i]();
     }
@@ -21,5 +21,8 @@ export function createStore(reducer) {
   return {
     dispatch,
     getState,
+    subscribe,
   };
 }
+
+export default createStore(reducer);
