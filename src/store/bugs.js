@@ -19,10 +19,15 @@ const slice = createSlice({
       let index = bugs.findIndex((bug) => bug.Id === action.payload.Id);
       bugs[index].resolved = true;
     },
+    bugsAssignedtoUser: (bugs, action) => {
+      const { bugId, userId } = action.payload;
+      const index = bugs.findIndex((bug) => bug.Id === bugId);
+      bugs[index].userId = userId;
+    },
   },
 });
 
-export const { bugAdded, bugResolved } = slice.actions;
+export const { bugAdded, bugResolved, bugsAssignedtoUser } = slice.actions;
 export default slice.reducer;
 
 //Memoization
@@ -33,3 +38,9 @@ export const getUnresolvedBugs = createSelector(
   (state) => state.entities.projects,
   (bugs, projects) => bugs.filter((bug) => !bug.resolved) // this logic only executes when there is change in bugs list else get result from state
 );
+
+export const getBugsByUser = (userId) =>
+  createSelector(
+    (state) => state.entities.bugs,
+    (bugs) => bugs.filter((bug) => bug.userId === userId)
+  );
