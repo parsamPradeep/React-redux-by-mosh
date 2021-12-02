@@ -14,7 +14,10 @@ let unsubscribe = store.subscribe(() => {
   console.log("Store got changed!", store.getState());
 });
 
-store.dispatch(projectAdded({ name: "project-1" }));
+store.dispatch((dispatch, getState) => {
+  dispatch({ type: "bugsReceived", bugs: [1, 2, 3] });
+  console.log(getState());
+});
 // store.dispatch(projectAdded({ name: "project-2" }));
 // unsubscribe();
 // store.dispatch(bugAdded({ description: "Bug1" }));
