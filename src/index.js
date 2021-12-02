@@ -6,14 +6,14 @@ let unsubscribe = store.subscribe(() => {
   console.log("Store got changed!", store.getState());
 });
 
-store.dispatch(bugAdded("Bug1"));
+store.dispatch(bugAdded({ description: "Bug1" }));
 
 unsubscribe();
 
-store.dispatch(bugAdded("Bug2"));
+store.dispatch(bugAdded({ description: "Bug2" }));
 
-store.dispatch(bugRemoved(2));
+store.dispatch(bugRemoved({ Id: 1 }));
 
-store.dispatch(bugResolved(1));
+store.dispatch(bugResolved({ Id: 2 }));
 
 console.log(store.getState());
