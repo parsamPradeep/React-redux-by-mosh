@@ -12,6 +12,6 @@ unsubscribe();
 
 store.dispatch(bugAdded({ description: "Bug2" }));
 
-store.dispatch(bugRemoved({ Id: 1 }));
+store.dispatch(bugResolved({ Id: 2 }));
 
 console.log(store.getState());
