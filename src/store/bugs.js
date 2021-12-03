@@ -19,13 +19,10 @@ const slice = createSlice({
     bugsReceived: (bugs, action) => {
       bugs.list = action.payload;
       bugs.loading = false;
+      bugs.lastFetched = Date.now();
     },
     bugAdded: (bugs, action) => {
-      bugs.list.push({
-        Id: ++lastId,
-        description: action.payload.description,
-        resolved: false,
-      });
+      bugs.list.push(action.payload);
     },
     bugResolved: (bugs, action) => {
       let index = bugs.list.findIndex((bug) => bug.Id === action.payload.Id);
@@ -55,12 +52,21 @@ export default slice.reducer;
 const url = "/bugs";
 export const loadBugs = () =>
   apiCallBegan({
-    url: url,
+    url,
     onStart: bugsRequested.type,
     onSuccess: bugsReceived.type,
     onError: bugsRequestFailed.type,
   });
 
+export const addBug = (bug) =>
+  apiCallBegan({
+    url,
+    methode: "post",
+    data: bug,
+    onStart: bugsRequested.type,
+    onSuccess: bugAdded.type,
+    onError: bugsRequestFailed.type,
+  });
 //Memoization
 //bugs => get unresolved bugs from catche
 

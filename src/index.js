@@ -6,6 +6,7 @@ import {
   bugsAssignedtoUser,
   getBugsByUser,
   loadBugs,
+  addBug,
 } from "./store/bugs";
 import { projectAdded } from "./store/project";
 import { userAdded } from "./store/users";
@@ -18,7 +19,7 @@ let unsubscribe = store.subscribe(() => {
 //   dispatch({ type: "bugsReceived", bugs: [1, 2, 3] });
 //   console.log(getState());
 // });
-store.dispatch(loadBugs());
+store.dispatch(addBug({ description: "a" }));
 // store.dispatch(projectAdded({ name: "project-2" }));
 // unsubscribe();
 // store.dispatch(bugAdded({ description: "Bug1" }));
