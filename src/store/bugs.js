@@ -13,8 +13,12 @@ const slice = createSlice({
   },
   reducers: {
     //action => action handlers
+    bugsRequested: (bugs, action) => {
+      bugs.loading = true;
+    },
     bugsReceived: (bugs, action) => {
       bugs.list = action.payload;
+      bugs.loading = false;
     },
     bugAdded: (bugs, action) => {
       bugs.list.push({
@@ -32,18 +36,29 @@ const slice = createSlice({
       const index = bugs.list.findIndex((bug) => bug.Id === bugId);
       bugs.list[index].userId = userId;
     },
+    bugsRequestFailed: (bugs, action) => {
+      bugs.loading = false;
+    },
   },
 });
 
-export const { bugAdded, bugResolved, bugsAssignedtoUser, bugsReceived } =
-  slice.actions;
+export const {
+  bugAdded,
+  bugResolved,
+  bugsAssignedtoUser,
+  bugsReceived,
+  bugsRequested,
+  bugsRequestFailed,
+} = slice.actions;
 export default slice.reducer;
 
 const url = "/bugs";
 export const loadBugs = () =>
   apiCallBegan({
     url: url,
+    onStart: bugsRequested.type,
     onSuccess: bugsReceived.type,
+    onError: bugsRequestFailed.type,
   });
 
 //Memoization
