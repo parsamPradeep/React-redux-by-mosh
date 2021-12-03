@@ -18,6 +18,14 @@ store.dispatch((dispatch, getState) => {
   dispatch({ type: "bugsReceived", bugs: [1, 2, 3] });
   console.log(getState());
 });
+store.dispatch({
+  type: "apiCallBegan",
+  payload: {
+    url: "/bugs",
+    onSuccess: "bugsReceived",
+    onError: "apiRequrstFailed",
+  },
+});
 // store.dispatch(projectAdded({ name: "project-2" }));
 // unsubscribe();
 // store.dispatch(bugAdded({ description: "Bug1" }));
