@@ -5,26 +5,20 @@ import {
   bugResolved,
   bugsAssignedtoUser,
   getBugsByUser,
+  loadBugs,
 } from "./store/bugs";
 import { projectAdded } from "./store/project";
 import { userAdded } from "./store/users";
-import * as action from "./store/apiActions";
 const store = configureStore();
 let unsubscribe = store.subscribe(() => {
   console.log("Store got changed!", store.getState());
 });
 
-store.dispatch((dispatch, getState) => {
-  dispatch({ type: "bugsReceived", bugs: [1, 2, 3] });
-  console.log(getState());
-});
-store.dispatch(
-  action.apiCallBegan({
-    url: "/bugs",
-    onSuccess: "bugsReceived",
-    onError: action.apiCallFailed.type,
-  })
-);
+// store.dispatch((dispatch, getState) => {
+//   dispatch({ type: "bugsReceived", bugs: [1, 2, 3] });
+//   console.log(getState());
+// });
+store.dispatch(loadBugs());
 // store.dispatch(projectAdded({ name: "project-2" }));
 // unsubscribe();
 // store.dispatch(bugAdded({ description: "Bug1" }));
